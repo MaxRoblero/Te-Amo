@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Regalo para ti ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a0a1a 0%, #2d1b2e 50%, #1a0a1a 100%);
+      font-family: 'Georgia', serif;
+      color: #f5e1f7;
+    }
+    .login-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 192, 203, 0.4);
+      text-align: center;
+      width: 300px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #f8c8dc;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+    input::placeholder {
+      color: #ddd;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #e63973;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #ff4d94;
+    }
+    .frase {
+      margin-top: 20px;
+      font-family: 'Georgia', serif;
+      font-weight: bold;
+      color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Acceso privado</h2>
+    <input type="text" id="usuario" placeholder="Usuario"><br>
+    <input type="password" id="clave" placeholder="Contraseña"><br>
+    <button onclick="validar()">Entrar</button>
+    <p class="frase">“Ahora junta las dos respuestas.<br>
+    Una abre la puerta.<br>
+    La otra la protege.”</p>
+  </div>
+
+  <script>
+    function validar() {
+      const user = document.getElementById("usuario").value;
+      const pass = document.getElementById("clave").value;
+
+      if (user === "TEAMO" && pass === "EMILY") {
+        alert("Bienvenida, amor ❤️");
+        window.location.href = "sorpresa.html";
+      } else {
+        alert("Usuario o contraseña incorrectos 😢");
+      }
+    }
+  </script>
+</body>
+</html>
