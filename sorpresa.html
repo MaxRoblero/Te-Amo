@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorpresa ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #2d1b2e 0%, #1a0a1a 50%, #2d1b2e 100%);
+      font-family: 'Georgia', serif;
+      color: #f5e1f7;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .sobre {
+      width: 200px;
+      height: 120px;
+      background: #e63973;
+      position: relative;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.6);
+      transition: opacity 1s ease;
+    }
+
+    .sobre::before, .sobre::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    .sobre::before {
+      top: 0;
+      left: 0;
+      border-width: 60px 100px 0 100px;
+      border-color: #ff4d94 transparent transparent transparent;
+      transition: transform 0.6s ease;
+      transform-origin: top;
+    }
+
+    .sobre::after {
+      bottom: 0;
+      left: 0;
+      border-width: 0 100px 60px 100px;
+      border-color: transparent transparent #ff4d94 transparent;
+    }
+
+    .poema {
+      margin-top: 30px;
+      max-width: 600px;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.5;
+      display: none;
+      color: #ffe066;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 2s ease;
+      cursor: pointer;
+    }
+
+    .mostrar-poema {
+      display: block;
+      opacity: 1;
+    }
+
+    .flotante {
+      position: absolute;
+      font-size: 1.5em;
+      opacity: 0;
+      transition: opacity 1.5s ease, left 2s ease, top 2s ease;
+      animation: girar 12s linear infinite;
+    }
+
+    @keyframes girar {
+      from { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+    }
+
+    .volar {
+      animation: volar 1s forwards;
+    }
+
+    @keyframes volar {
+      to {
+        transform: translate(
+          calc((50vw - var(--x)) * 2),
+          calc((50vh - var(--y)) * 2)
+        );
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sobre" onclick="abrirSobre()"></div>
+  <div class="poema" id="poema" onclick="mostrarFlotantes()">
+    🌹 Mi amor, cada palabra que escribo<br>
+    es un reflejo de lo que siento.<br>
+    Eres mi razón, mi alegría,<br>
+    y mi eterno pensamiento. ❤️
+  </div>
+
+<script>
+  let abierto = false;
+  let clickCentro = false;
+
+  function abrirSobre() {
+    const sobre = document.querySelector(".sobre");
+    const poema = document.getElementById("poema");
+
+    if (!abierto) {
+      sobre.classList.add("abierto");
+      abierto = true;
+    } else {
+      sobre.style.opacity = "0";
+      setTimeout(() => {
+        sobre.style.display = "none";
+        poema.classList.add("mostrar-poema");
+      }, 1000);
+    }
+  }
+
+  function mostrarFlotantes() {
+    const poema = document.getElementById("poema");
+    poema.style.opacity = "0";
+    setTimeout(() => {
+      poema.style.display = "none";
+      crearFlotantes();
+    }, 1000);
+  }
+
+  function crearFlotantes() {
+    const mensajes = [
+      "Te amo 💖","Eres mi todo 💕","Siempre juntos 💞","Mi razón de vivir ❤️",
+      "Eres mi destino 💘","Mi sol ☀️","Mi luna 🌙","Mi estrella ⭐","Mi universo 🌌",
+      "Mi corazón late por ti 💓","Eres mi sueño ✨","Mi alegría 🌈","Mi paz 🕊️",
+      "Mi aventura 🌍","Mi canción 🎶","Mi magia 🪄","Mi fortuna 🍀","Mi luz 🔆"
+    ];
+
+    const emojis = ["❤️","💜","💙","💚","💛","🦋","🌹","🌸","🌼","🌻","🌺","🍀","🌟","🔥","🎇","🎆","✨","💫","🌈"];
+
+    const elementos = mensajes.concat(emojis);
+
+    elementos.forEach((msg, i) => {
+      setTimeout(() => {
+        const span = document.createElement("span");
+        span.className = "flotante";
+        span.innerHTML = msg;
+        span.style.left = Math.random() * 80 + "%";
+        span.style.top = Math.random() * 80 + "%";
+        document.body.appendChild(span);
+        setTimeout(() => { span.style.opacity = "1"; }, 100); 
+      }, i * 500);
+    });
+
+    document.body.addEventListener("click", manejarClick);
+  }
+
+  function manejarClick() {
+    if (!clickCentro) {
+      const flotantes = document.querySelectorAll(".flotante");
+      flotantes.forEach(f => {
+        f.style.left = "50%";
+        f.style.top = "50%";
+      });
+      clickCentro = true;
+    } else {
+      explosion();
+      document.body.removeEventListener("click", manejarClick);
+    }
+  }
+
+function explosion() {
+  const flotantes = document.querySelectorAll(".flotante");
+  flotantes.forEach(f => {
+    f.style.transition = "transform 1s ease, opacity 1s ease";
+    f.style.transform = `translate(${(Math.random()-0.5)*800}px, ${(Math.random()-0.5)*600}px)`;
+    f.style.opacity = "0";
+  });
+
+  const flash = document.createElement("div");
+  flash.style.position = "fixed";
+  flash.style.top = "0";
+  flash.style.left = "0";
+  flash.style.width = "100%";
+  flash.style.height = "100%";
+  flash.style.background = "white";
+  flash.style.zIndex = "9999";
+  flash.style.opacity = "0";
+  flash.style.transition = "opacity 1s ease";
+
+  document.body.appendChild(flash);
+
+  // Aparece blanco
+  setTimeout(() => { flash.style.opacity = "1"; }, 500);
+
+  // Mantener blanco 2-3 segundos
+  setTimeout(() => { flash.style.opacity = "0"; }, 2500);
+
+  // Limpiar flotantes y mostrar corazón con texto
+  setTimeout(() => {
+    flotantes.forEach(f => f.remove());
+    flash.remove();
+
+    // Contenedor del corazón y texto
+    const heartContainer = document.createElement("div");
+    heartContainer.style.position = "fixed";
+    heartContainer.style.top = "50%";
+    heartContainer.style.left = "50%";
+    heartContainer.style.transform = "translate(-50%, -50%)";
+    heartContainer.style.textAlign = "center";
+    heartContainer.style.zIndex = "9999";
+    heartContainer.style.opacity = "0";
+    heartContainer.style.transition = "opacity 1s ease";
+
+    // Corazón grande
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.style.fontSize = "15em";
+
+    // Texto dentro del corazón
+    const text = document.createElement("div");
+    text.innerHTML = "Feliz 14 de Febrero<br>Primer Mes 💕";
+    text.style.position = "absolute";
+    text.style.top = "55%";
+    text.style.left = "50%";
+    text.style.transform = "translate(-50%, -50%)";
+    text.style.color = "white";
+    text.style.fontSize = "1.5em";
+    text.style.fontWeight = "bold";
+    text.style.textShadow = "2px 2px 5px black";
+
+    heartContainer.appendChild(heart);
+    heartContainer.appendChild(text);
+    document.body.appendChild(heartContainer);
+
+    // Desvanecido suave al aparecer
+    setTimeout(() => { heartContainer.style.opacity = "1"; }, 100);
+
+    // Después de unos segundos, desvanecer corazón y mostrar "TE AMO EMILY"
+    setTimeout(() => {
+      heartContainer.style.opacity = "0";
+    }, 4000);
+
+    setTimeout(() => {
+      heartContainer.remove();
+
+      const finalMessage = document.createElement("div");
+      finalMessage.innerHTML = "TE AMO EMILY";
+      finalMessage.style.position = "fixed";
+      finalMessage.style.top = "50%";
+      finalMessage.style.left = "50%";
+      finalMessage.style.transform = "translate(-50%, -50%)";
+      finalMessage.style.fontSize = "6em";
+      finalMessage.style.fontWeight = "bold";
+      finalMessage.style.color = "#e63973";
+      finalMessage.style.textShadow = "3px 3px 8px black";
+      finalMessage.style.opacity = "0";
+      finalMessage.style.transition = "opacity 2s ease";
+
+      document.body.appendChild(finalMessage);
+
+      setTimeout(() => { finalMessage.style.opacity = "1"; }, 100);
+    }, 5000);
+
+    clickCentro = false;
+  }, 3500);
+}
+    </script>
+</body>
+</html>
